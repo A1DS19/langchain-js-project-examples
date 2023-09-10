@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import PageHeader from "../components/PageHeader";
-import PromptBox from "../components/PromptBox";
-import ResultWithSources from "../components/ResultWithSources";
-import Title from "../components/Title";
-import TwoColumnLayout from "../components/TwoColumnLayout";
+import React, { useState } from 'react';
+import PageHeader from '../components/PageHeader';
+import PromptBox from '../components/PromptBox';
+import ResultWithSources from '../components/ResultWithSources';
+import Title from '../components/Title';
+import TwoColumnLayout from '../components/TwoColumnLayout';
 
 /**
  *
@@ -16,10 +16,8 @@ import TwoColumnLayout from "../components/TwoColumnLayout";
  */
 const ContentGenerator = () => {
   // Follw up: Write me a tweet about pedro pascal.
-  const [prompt, setPrompt] = useState(
-    "https://www.youtube.com/watch?v=O_9JoimRj8w"
-  );
-  const [topic, setTopic] = useState("Pedro Pascal");
+  const [prompt, setPrompt] = useState('https://www.youtube.com/watch?v=O_9JoimRj8w');
+  const [topic, setTopic] = useState('Pedro Pascal');
   const [error, setError] = useState(null);
   const [firstMsg, setFirstMsg] = useState(true);
   const [messages, setMessages] = useState([
@@ -41,13 +39,13 @@ const ContentGenerator = () => {
       // Push the user's message into the messages array
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: prompt, type: "user", sourceDocuments: null },
+        { text: prompt, type: 'user', sourceDocuments: null },
       ]);
 
       const response = await fetch(`/api/content-generator`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ prompt: prompt, topic: topic, firstMsg }),
       });
@@ -65,47 +63,43 @@ const ContentGenerator = () => {
         ...prevMessages,
         {
           text: searchRes.output.text,
-          type: "bot",
+          type: 'bot',
         },
       ]);
       setFirstMsg(false);
-      setPrompt("");
-      setError("");
+      setPrompt('');
+      setError('');
     } catch (err) {
       console.error(err);
-      setError("Error fetching transcript. Please try again.");
+      setError('Error fetching transcript. Please try again.');
     }
   };
 
   return (
     <>
-      <Title emoji="🧙🏾‍♂️" headingText="AI Content Generator" />
+      <Title emoji='🧙🏾‍♂️' headingText='AI Content Generator' />
       <TwoColumnLayout
         leftChildren={
           <>
             <PageHeader
-              heading="Automated Content Generator"
+              heading='Automated Content Generator'
               boldText="Doing your own manual research is so 2022. Let's automate it."
-              description="This tool uses the agents to create a unique video script for you. Head over to Module X to get started!"
+              description='This tool uses the agents to create a unique video script for you. Head over to Module X to get started!'
             />
           </>
         }
         rightChildren={
           <>
             {/* Added max messages */}
-            <ResultWithSources
-              messages={messages}
-              pngFile="wizard"
-              maxMsgs={3}
-            />
+            <ResultWithSources messages={messages} pngFile='wizard' maxMsgs={3} />
             <PromptBox
               prompt={topic}
               handlePromptChange={handleTopicChange}
               handleSubmit={handleSubmit}
               error={error}
-              placeHolderText={"Enter a topic"}
+              placeHolderText={'Enter a topic'}
               disableButton={true}
-              labelText="Topic"
+              labelText='Topic'
             />
             <PromptBox
               prompt={prompt}
@@ -113,11 +107,11 @@ const ContentGenerator = () => {
               handleSubmit={handleSubmit}
               placeHolderText={
                 messages.length === 1
-                  ? "Enter a youtube url, e.g., https://www.youtube.com/watch?v=O_9JoimRj8w"
-                  : "Ask a follow up question"
+                  ? 'Enter a youtube url, e.g., https://www.youtube.com/watch?v=O_9JoimRj8w'
+                  : 'Ask a follow up question'
               }
               error={error}
-              labelText="Chat"
+              labelText='Chat'
             />
           </>
         }
