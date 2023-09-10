@@ -57,3 +57,10 @@ Check out our [Next.js deployment documentation](https: //nextjs.org/ docs/deplo
 ## Feedback and Contributions
 
 Your feedback and contributions are welcome! Please feel free to open an issue or submit a pull request.
+
+### Chosen vectorStore Supabase, More here:
+
+- https://js.langchain.com/docs/modules/data_connection/vectorstores/integrations/supabase
+- https://supabase.com/blog/openai-embeddings-postgres-vector
+- https://supabase.com/docs/guides/database/extensions/pgvector
+- https://supabase.com/docs/guides/ai/langchain

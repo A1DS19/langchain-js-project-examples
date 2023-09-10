@@ -36,6 +36,7 @@
     "@types/node": "20.1.0",
     "@types/react": "18.2.6",
     "express-sse": "^0.5.3",
+    "supabase": "^1.93.0",
     "typescript": "5.0.4"
   }
 }

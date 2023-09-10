@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import ResultWithSources from "../components/ResultWithSources";
-import PromptBox from "../components/PromptBox";
-import Button from "../components/Button";
-import PageHeader from "../components/PageHeader";
-import Title from "../components/Title";
-import TwoColumnLayout from "../components/TwoColumnLayout";
-import ButtonContainer from "../components/ButtonContainer";
-import "../globals.css";
+import React, { useState } from 'react';
+import ResultWithSources from '../components/ResultWithSources';
+import PromptBox from '../components/PromptBox';
+import Button from '../components/Button';
+import PageHeader from '../components/PageHeader';
+import Title from '../components/Title';
+import TwoColumnLayout from '../components/TwoColumnLayout';
+import ButtonContainer from '../components/ButtonContainer';
+import '../globals.css';
 
 // This functional component is responsible for loading PDFs
 const PDFLoader = () => {
   // Managing prompt, messages, and error states with useState
-  const [prompt, setPrompt] = useState("How to get rich?");
+  const [prompt, setPrompt] = useState('How to get rich?');
   const [messages, setMessages] = useState([
     {
       text: "Hi, I'm a Naval AI. What would you like to know?",
-      type: "bot",
+      type: 'bot',
     },
   ]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   // This function updates the prompt value when the user types in the prompt box
   const handlePromptChange = (e) => {
@@ -36,13 +36,16 @@ const PDFLoader = () => {
 
       // A GET request is sent to the backend
       const response = await fetch(`/api/${endpoint}`, {
-        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'GET',
       });
 
       // The response from the backend is parsed as JSON
       const searchRes = await response.json();
       console.log(searchRes);
-      setError(""); // Clear any existing error messages
+      setError(''); // Clear any existing error messages
     } catch (error) {
       console.log(error);
       setError(error.message);
@@ -53,19 +56,19 @@ const PDFLoader = () => {
   // It sends a POST request to the provided endpoint with the current prompt in the request body
   const handleSubmitPrompt = async (endpoint) => {
     try {
-      setPrompt("");
+      setPrompt('');
 
       // Push the user's message into the messages array
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: prompt, type: "user", sourceDocuments: null },
+        { text: prompt, type: 'user', sourceDocuments: null },
       ]);
 
       // A POST request is sent to the backend with the current prompt in the request body
       const response = await fetch(`/api/${endpoint}`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ input: prompt }),
       });
@@ -85,12 +88,12 @@ const PDFLoader = () => {
         ...prevMessages,
         {
           text: searchRes.result.text,
-          type: "bot",
+          type: 'bot',
           sourceDocuments: searchRes.result.sourceDocuments,
         },
       ]);
 
-      setError(""); // Clear any existing error messages
+      setError(''); // Clear any existing error messages
     } catch (error) {
       console.log(error);
       setError(error.message);
@@ -100,17 +103,17 @@ const PDFLoader = () => {
   // The component returns a two column layout with various child components
   return (
     <>
-      <Title emoji="💬" headingText="PDF-GPT" />
+      <Title emoji='💬' headingText='PDF-GPT' />
       <TwoColumnLayout
         leftChildren={
           <>
             <PageHeader
-              heading="Ask Naval Anything"
-              boldText="How to get rich? How to be happy?"
-              description="This tool will
+              heading='Ask Naval Anything'
+              boldText='How to get rich? How to be happy?'
+              description='This tool will
             let you ask anything contained in a PDF document. This tool uses
             Embeddings, Pinecone, VectorDBQAChain, and VectorStoreAgents. Head over to Module 1 to
-            get started!"
+            get started!'
             />
             <ButtonContainer>
               {/* <Button
@@ -121,22 +124,22 @@ const PDFLoader = () => {
               /> */}
               <Button
                 handleSubmit={handleSubmit}
-                endpoint="pdf-upload"
-                buttonText="Upload Book 📚"
-                className="Button"
+                endpoint='pdf-upload'
+                buttonText='Upload Book 📚'
+                className='Button'
               />
             </ButtonContainer>
           </>
         }
         rightChildren={
           <>
-            <ResultWithSources messages={messages} pngFile="pdf" />
+            <ResultWithSources messages={messages} pngFile='pdf' />
             <PromptBox
               prompt={prompt}
               handlePromptChange={handlePromptChange}
-              handleSubmit={() => handleSubmitPrompt("/pdf-query")}
+              handleSubmit={() => handleSubmitPrompt('/pdf-query')}
               // handleSubmit={() => handleSubmitQuery("/pdfquery-agent")}
-              placeHolderText={"How to get rich?"}
+              placeHolderText={'How to get rich?'}
               error={error}
             />
           </>
